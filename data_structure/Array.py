@@ -1,7 +1,7 @@
 class MyArray:
-    def __init__(self):
-        self.length = 0
-        self.data = {}
+    def __init__(self, val=[]):
+        self.length = len(val)
+        self.data = dict(zip(range(len(val)), val))
 
     def get(self, idx):
         if idx < self.length:
