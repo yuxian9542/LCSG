@@ -22,7 +22,8 @@ class MyArray:
             raise Exception('index out of range')
 
     def delete(self, idx):
-        assert idx < self.length, 'index out of range'
+        if idx < self.length:
+            raise Exception('index out of range')
         while idx < self.length - 1:
             self.data[idx] = self.data[idx + 1]
             idx += 1
@@ -30,7 +31,8 @@ class MyArray:
         self.length -= 1
 
     def pop(self):
-        assert self.length > 0, 'cannot perform on empty array'
+        if self.length > 0:
+            raise Exception('cannot perform on empty array')
         val = self.data[self.length - 1]
         del self.data[self.length - 1]
         self.length -= 1
