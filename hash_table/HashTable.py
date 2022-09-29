@@ -1,19 +1,35 @@
+class Node:
+    def __init__(self, key, value, next=None):
+        self._key = key
+        self.value = value
+        self.next = None
+
+    @property
+    def key(self):
+        return self._key
+
+
 class HashTable:
     def __init__(self, size: int) -> None:
-        self.buffer = [[] for i in range(size)]
+        self.buffer = [None for i in range(size)]
         self.m = size
 
     @staticmethod
-    def _search_from_list(lst: list, key):
-        for idx, key_val_pair in enumerate(lst):
-            if key_val_pair[0] == key:
-                return idx
-        return -1
+    def _search_from_list(lst: Node, key):
+        count = -1
+        cur = lst
+        while cur is not None:
+            count += 1
+            if cur.key == key:
+                return count, cur.value
+            else:
+                cur = cur.next
+        return -1, None
 
     def _get_idx(self, key):
         hash_key = hash(key) % self.m
-        key_idx = self._search_from_list(self.buffer[hash_key], key)
-        return hash_key, key_idx
+        key_idx, val = self._search_from_list(self.buffer[hash_key], key)
+        return hash_key, key_idx, val
 
     def insert(self, key, val) -> None:
         hash_key, key_idx = self._get_idx(key)
