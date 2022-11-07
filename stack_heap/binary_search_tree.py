@@ -13,78 +13,83 @@ class BinarySearchTree:
         if self.head is None:
             self.head = Node(val)
         else:
-            cur = self.head
+            current = self.head
             while True:
-                if cur.val < val:
-                    if cur.right is None:
-                        cur.right = Node(val)
+                if current.val < val:
+                    if current.right is None:
+                        current.right = Node(val)
                         break
                     else:
-                        cur = cur.right
+                        current = current.right
                 else:
-                    if cur.left is None:
-                        cur.left = Node(val)
+                    if current.left is None:
+                        current.left = Node(val)
                         break
                     else:
-                        cur = cur.left
+                        current = current.left
 
     def contains(self, val):
-        cur = self.head
-        while cur is not None:
-            cur_val = cur.val
-            if cur_val == val:
+        current = self.head
+        while current is not None:
+            current_val = current.val
+            if current_val == val:
                 return True
-            elif cur_val > val:
-                cur = cur.left
+            elif current_val > val:
+                current = current.left
             else:
-                cur = cur.right
+                current = current.right
         return False
 
     def remove(self, val):
         if self.head is not None:
             prev = self.head
-            cur = prev
+            current = prev
+            next_larger_val = 0
             while True:
-                if cur.val == val:
-                    if cur.left is None and cur.right is None:
-                        if prev is self.head():
+                if current.val == val:
+                    if current.left is None and current.right is None:
+                        if prev is self.head:
                             self.head = None
                         else:
-                            if cur.val > prev.val:
+                            if current.val > prev.val:
                                 prev.right = None
                             else:
                                 prev.left = None
-                        del cur
-                    elif cur.left is None:
-                        if cur.val > prev.val:
-                            prev.right = cur.right
+                        del current
+                        return
+                    elif current.left is None:
+                        if current.val > prev.val:
+                            prev.right = current.right
                         else:
-                            prev.left = cur.right
-                        del cur
-                    elif cur.right is None:
-                        if cur.val > prev.val:
-                            prev.right = cur.left
+                            prev.left = current.right
+                        del current
+                        return
+                    elif current.right is None:
+                        if current.val > prev.val:
+                            prev.right = current.left
                         else:
-                            prev.left = cur.left
-                        del cur
+                            prev.left = current.left
+                        del current
+                        return
                     else:
-                        next_larger_node = cur.right
+                        next_larger_node = current.right
                         while next_larger_node is not None:
-                            next_larger_val = cur.right.val
+                            next_larger_val = next_larger_node.val
                             next_larger_node = next_larger_node.left
                         self.remove(next_larger_val)
-                        cur.val = next_larger_val
+                        current.val = next_larger_val
+                        return
 
-                elif cur.val > val:
-                    if cur.left is not None:
-                        prev = cur
-                        cur = cur.left
+                elif current.val > val:
+                    if current.left is not None:
+                        prev = current
+                        current = current.left
                     else:
                         return
                 else:
-                    if cur.right is not None:
-                        prev = cur
-                        cur = cur.right
+                    if current.right is not None:
+                        prev = current
+                        current = current.right
                     else:
                         return
 
@@ -106,7 +111,8 @@ bt.add(12)
 bt.add(14)
 bt.add(17)
 bt.in_order_trav(bt.head)
-bt.remove(12)
+print('remove 10')
+bt.remove(10)
 bt.in_order_trav(bt.head)
 
 #
