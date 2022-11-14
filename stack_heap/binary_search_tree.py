@@ -93,12 +93,23 @@ class BinarySearchTree:
                     else:
                         return
 
-    def in_order_trav(self, node):
-        # just switch the order of print to have different types of traverse
+    def pre_order_trav(self, node):
         if node is not None:
             print(node.val)
+            self.pre_order_trav(node.left)
+            self.pre_order_trav(node.right)
+
+    def in_order_trav(self, node):
+        if node is not None:
             self.in_order_trav(node.left)
+            print(node.val)
             self.in_order_trav(node.right)
+
+    def post_order_trav(self, node):
+        if node is not None:
+            self.post_order_trav(node.left)
+            self.post_order_trav(node.right)
+            print(node.val)
 
 
 bt = BinarySearchTree()
@@ -111,9 +122,13 @@ bt.add(12)
 bt.add(14)
 bt.add(17)
 bt.in_order_trav(bt.head)
+print('--------------------------')
+bt.post_order_trav(bt.head)
+print('--------------------------')
+bt.pre_order_trav(bt.head)
 print('remove 10')
 bt.remove(10)
-bt.in_order_trav(bt.head)
+bt.pre_order_trav(bt.head)
 
 #
 # bt.contains(5)
